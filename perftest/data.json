@@ -1,0 +1,135 @@
+{
+    "resource": "/licence/{licenceid}",
+    "path": "/licence/CSRNGW1QXSEBXL9QNLAT6F",
+    "httpMethod": "GET",
+    "headers": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+        "cache-control": "no-cache",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "GB",
+        "Host": "56jpuled32.execute-api.eu-west-1.amazonaws.com",
+        "postman-token": "d42f7686-6248-a6bd-7825-6432dbf26d8a",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "none",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
+        "Via": "2.0 e2b64644cdf0d895a1660adff04dfa18.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Id": "-bet_Y_oKji4rAvQnf35YbMTGOAo3dqfOVsfVpYX7ibkQ8pbVSguVA==",
+        "X-Amzn-Trace-Id": "Root=1-5f132ff3-e394c0d8c26010dc68a3d822",
+        "X-Forwarded-For": "51.140.40.59, 70.132.49.131",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+    },
+    "multiValueHeaders": {
+        "Accept": [
+            "*/*"
+        ],
+        "Accept-Encoding": [
+            "gzip, deflate, br"
+        ],
+        "Accept-Language": [
+            "en-GB,en-US;q=0.9,en;q=0.8"
+        ],
+        "cache-control": [
+            "no-cache"
+        ],
+        "CloudFront-Forwarded-Proto": [
+            "https"
+        ],
+        "CloudFront-Is-Desktop-Viewer": [
+            "true"
+        ],
+        "CloudFront-Is-Mobile-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-SmartTV-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-Tablet-Viewer": [
+            "false"
+        ],
+        "CloudFront-Viewer-Country": [
+            "GB"
+        ],
+        "Host": [
+            "56jpuled32.execute-api.eu-west-1.amazonaws.com"
+        ],
+        "postman-token": [
+            "d42f7686-6248-a6bd-7825-6432dbf26d8a"
+        ],
+        "sec-fetch-dest": [
+            "empty"
+        ],
+        "sec-fetch-mode": [
+            "cors"
+        ],
+        "sec-fetch-site": [
+            "none"
+        ],
+        "User-Agent": [
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36"
+        ],
+        "Via": [
+            "2.0 e2b64644cdf0d895a1660adff04dfa18.cloudfront.net (CloudFront)"
+        ],
+        "X-Amz-Cf-Id": [
+            "-bet_Y_oKji4rAvQnf35YbMTGOAo3dqfOVsfVpYX7ibkQ8pbVSguVA=="
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-5f132ff3-e394c0d8c26010dc68a3d822"
+        ],
+        "X-Forwarded-For": [
+            "51.140.40.59, 70.132.49.131"
+        ],
+        "X-Forwarded-Port": [
+            "443"
+        ],
+        "X-Forwarded-Proto": [
+            "https"
+        ]
+    },
+    "queryStringParameters": null,
+    "multiValueQueryStringParameters": null,
+    "pathParameters": {
+        "licenceid": "CSRNGW1QXSEBXL9QNLAT6F"
+    },
+    "stageVariables": null,
+    "requestContext": {
+        "resourceId": "km1sh6",
+        "resourcePath": "/licence/{licenceid}",
+        "httpMethod": "GET",
+        "extendedRequestId": "P4RuHEdsDoEF6ig=",
+        "requestTime": "18/Jul/2020:17:22:59 +0000",
+        "path": "/dev/licence/CSRNGW1QXSEBXL9QNLAT6F",
+        "accountId": "082136225280",
+        "protocol": "HTTP/1.1",
+        "stage": "dev",
+        "domainPrefix": "56jpuled32",
+        "requestTimeEpoch": 1595092979856,
+        "requestId": "914c4823-8212-4046-ad82-a3515abdb92d",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "51.140.40.59",
+            "principalOrgId": null,
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
+            "user": null
+        },
+        "domainName": "56jpuled32.execute-api.eu-west-1.amazonaws.com",
+        "apiId": "56jpuled32"
+    },
+    "body": null,
+    "isBase64Encoded": false
+}

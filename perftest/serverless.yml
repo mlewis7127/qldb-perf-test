@@ -1,0 +1,27 @@
+
+service: perftest
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  region: eu-west-1
+
+plugins:
+  - serverless-pseudo-parameters
+  - serverless-iam-roles-per-function
+
+
+functions:
+  perfGetLicence:
+    name: perf-get-licence-${self:provider.stage}
+    handler: functions/perf-get-licence.handler
+    events:
+      - http:
+          path: /licence/{licenceid}
+          method: get
+    iamRoleStatements:
+      - Effect: Allow
+        Action: 
+          - qldb:SendCommand
+        Resource: arn:aws:qldb:eu-west-1:082136225280:ledger/qldb-simple-demo-dev
