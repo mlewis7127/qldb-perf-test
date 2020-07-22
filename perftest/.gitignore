@@ -4,3 +4,9 @@ jspm_packages
 
 # Serverless directories
 .serverless
+
+# Output / Input JSON files
+dynamodb-data.json
+dynamodb-output.json
+qldb-data.json 
+qldb-output.json
