@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@dazn/lambda-powertools-logger": "^1.24.1",
     "amazon-qldb-driver-nodejs": "^1.0.0",
     "aws-sdk": "^2.706.0",
     "ion-js": "^4.0.1",

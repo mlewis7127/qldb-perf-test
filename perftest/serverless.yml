@@ -1,13 +1,15 @@
 
-service: perftest
+service: qldb-perf-demo
 
 provider:
   name: aws
   runtime: nodejs12.x
+  memorySize: 512
   stage: ${opt:stage, 'dev'}
   region: eu-west-1
   environment:
-    AWS_NODEJS_CONNECTION_REUSE_ENABLED : "1"
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED	: "1"
+
 
 plugins:
   - serverless-pseudo-parameters
@@ -19,18 +21,65 @@ custom:
     webpackConfig: 'webpack.config.js'   # Name of webpack configuration file
     includeModules: false   # Node modules configuration for packaging
     packager: 'npm'   # Packager that will be used to package your external modules
-
+  
 
 functions:
-  perfGetLicence:
-    name: perf-get-licence-${self:provider.stage}
-    handler: functions/perf-get-licence.handler
+  perfQLDB:
+    name: perf-qldb-${self:provider.stage}
+    handler: functions/perf-qldb.handler
     events:
       - http:
-          path: /licence/{licenceid}
+          path: /qldb/{govid}
           method: get
     iamRoleStatements:
       - Effect: Allow
         Action: 
           - qldb:SendCommand
-        Resource: arn:aws:qldb:eu-west-1:082136225280:ledger/qldb-simple-demo-dev
+        Resource: arn:aws:qldb:#{AWS::Region}:#{AWS::AccountId}:ledger/qldb-perf-demo-${self:provider.stage}
+
+  perfDynamoDB:
+    name: perf-dynamodb-${self:provider.stage}
+    handler: functions/perf-dynamodb.handler
+    events:
+      - http:
+          path: /dynamodb/{govid}
+          method: get
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+          - dynamodb:Scan
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
+        Resource:
+          Fn::GetAtt: [DynamoDBTable, Arn]
+
+resources:
+  Resources:
+    QLDBTable:
+      Type: AWS::QLDB::Ledger
+      Properties:
+        Name: qldb-perf-demo-${self:provider.stage}
+        DeletionProtection: false
+        PermissionsMode: ALLOW_ALL
+        Tags:
+          - 
+            Key: name
+            Value: qldb-perf-demo
+
+    DynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain # Use 'Retain' if sls deploy should not delete the table
+      Properties:
+        TableName: Person-${self:provider.stage}
+        AttributeDefinitions:
+          -
+            AttributeName: GovId
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: GovId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST

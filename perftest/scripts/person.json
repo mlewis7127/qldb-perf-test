@@ -1,0 +1,5 @@
+[
+    {"GovId": "LEWISR261LL", "FirstName": "Raul", "LastName": "Lewis", "DOB": "1963-08-19T", "GovIdType": "Driver License", "Address": "1719 University Street, Seattle, WA, 98109" },
+    {"GovId": "LOGANB486CG", "FirstName": "Brent", "LastName": "Logan", "DOB": "1967-07-03T", "GovIdType": "Driver License", "Address": "43 Stockert Hollow Road, Everett, WA, 98203" },
+    {"GovId": "744 849 301", "FirstName": "Alexis", "LastName": "Pena", "DOB": "1974-02-10T", "GovIdType": "SSN", "Address": "4058 Melrose Street, Spokane Valley, WA, 99206" }
+]
