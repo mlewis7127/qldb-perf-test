@@ -7,9 +7,6 @@ provider:
   memorySize: 512
   stage: ${opt:stage, 'dev'}
   region: eu-west-1
-  environment:
-    AWS_NODEJS_CONNECTION_REUSE_ENABLED	: "1"
-
 
 plugins:
   - serverless-pseudo-parameters
@@ -36,6 +33,10 @@ functions:
         Action: 
           - qldb:SendCommand
         Resource: arn:aws:qldb:#{AWS::Region}:#{AWS::AccountId}:ledger/qldb-perf-demo-${self:provider.stage}
+    environment:
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED	: "1"
+      LEDGER_NAME : qldb-perf-demo-${self:provider.stage}
+      
 
   perfDynamoDB:
     name: perf-dynamodb-${self:provider.stage}
@@ -55,6 +56,11 @@ functions:
           - dynamodb:DeleteItem
         Resource:
           Fn::GetAtt: [DynamoDBTable, Arn]
+    environment:
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED	: "1"
+      TABLE_NAME : Person-${self:provider.stage}
+        
+
 
 resources:
   Resources:

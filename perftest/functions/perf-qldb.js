@@ -1,5 +1,5 @@
 const { QldbDriver } = require('amazon-qldb-driver-nodejs');
-const qldbDriver = new QldbDriver('qldb-perf-demo-dev');
+const qldbDriver = new QldbDriver(process.env.LEDGER_NAME);
 
 module.exports.handler = async (event) => {
     const { govid } = event.pathParameters;
