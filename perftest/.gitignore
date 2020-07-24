@@ -10,3 +10,6 @@ dynamodb-data.json
 dynamodb-output.json
 qldb-data.json 
 qldb-output.json
+
+# Generated .csv files
+*.csv
