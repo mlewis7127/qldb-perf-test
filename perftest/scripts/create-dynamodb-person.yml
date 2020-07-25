@@ -1,5 +1,5 @@
 config:
-    target: "https://s9staik7z5.execute-api.eu-west-1.amazonaws.com/dev"
+    target: "{URL}"
     phases:
       - duration: 300
         arrivalRate: 10
