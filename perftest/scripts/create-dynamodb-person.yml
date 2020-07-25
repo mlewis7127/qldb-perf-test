@@ -1,0 +1,22 @@
+config:
+    target: "https://s9staik7z5.execute-api.eu-west-1.amazonaws.com/dev"
+    phases:
+      - duration: 300
+        arrivalRate: 10
+    processor: "./createTestPerson.js"
+  
+scenarios:
+    - flow:
+        # call generateRandomData() to create the name, email, and password variables
+        - function: "createTestPerson"
+        - post:
+            url: "/dynamodb/"
+            json:
+                GovId: "{{ govid }}"
+                FirstName: "{{ firstName }}"
+                LastName: "{{ lastName }}"
+                DOB: "{{ dob }}"
+                GovIdType: "{{ govIdType }}"
+                Address: "{{ address }}"
+        # Print the data we're sending while debugging the script:
+        - log: "Sent a request to /qldb with {{ govid }}, {{ firstName }}, {{ lastName }}, {{ dob }}, {{ govIdType }}, {{ address }}"

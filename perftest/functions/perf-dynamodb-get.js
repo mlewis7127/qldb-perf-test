@@ -3,15 +3,15 @@ const documentClient = new DynamoDB.DocumentClient()
 
 
 module.exports.handler = async (event) => {
-    const { govid } = event.pathParameters;
-    console.log(`In perf-dynamodb function with ${govid}`);
-    console.log(`** PRINT MSG: ${JSON.stringify(event, null, 2)}`);
+  console.log(`** PRINT MSG: ${JSON.stringify(event, null, 2)}`);
+  const { govid } = event.pathParameters;
+  console.log(`In perf-dynamodb function with ${govid}`);
 
-    const person = await getPerson(govid);
-    return {
-        statusCode: 200,
-        body: JSON.stringify(person)
-    };
+  const person = await getPerson(govid);
+  return {
+      statusCode: 200,
+      body: JSON.stringify(person)
+  };
 }
 
 

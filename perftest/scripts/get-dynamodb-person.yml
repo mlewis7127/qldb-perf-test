@@ -1,0 +1,16 @@
+config:
+    target: "https://s9staik7z5.execute-api.eu-west-1.amazonaws.com/dev"
+    phases:
+      - duration: 300
+        arrivalRate: 10
+    payload: 
+        path: "dynamodbusers.csv"
+        fields: 
+            - "govid"
+
+scenarios:
+    - flow:
+        - get:
+            url: "/dynamodb/{{ govid }}"
+        # Print the data we're sending while debugging the script:
+        - log: "Sent a request to /dynamodb with {{ govid }}"
