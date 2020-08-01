@@ -1,0 +1,16 @@
+config:
+    target: "{URL}"
+    phases:
+      - duration: 300
+        arrivalRate: 10
+    payload: 
+        path: "qldbusers.csv"
+        fields: 
+            - "govid"
+
+scenarios:
+    - flow:
+        - get:
+            url: "/qldb/{{ govid }}"
+        # Print the data we're sending while debugging the script:
+        - log: "Sent a request to /qldb with {{ govid }}"

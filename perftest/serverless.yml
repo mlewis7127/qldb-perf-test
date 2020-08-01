@@ -7,6 +7,9 @@ provider:
   memorySize: 512
   stage: ${opt:stage, 'dev'}
   region: eu-west-1
+  tracing:
+    apiGateway: true
+    lambda: true 
 
 plugins:
   - serverless-pseudo-parameters
@@ -21,9 +24,30 @@ custom:
   
 
 functions:
-  perfQLDB:
-    name: perf-qldb-${self:provider.stage}
-    handler: functions/perf-qldb.handler
+  perfQLDBCreate:
+    name: perf-qldb-create-${self:provider.stage}
+    handler: functions/perf-qldb-create.handler
+    events:
+      - http:
+          path: /qldb
+          method: post
+    iamRoleStatements:
+      - Effect: Allow
+        Action: 
+          - qldb:SendCommand
+        Resource: arn:aws:qldb:#{AWS::Region}:#{AWS::AccountId}:ledger/qldb-perf-demo-${self:provider.stage}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"      
+    environment:
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED : "1"
+      LEDGER_NAME : qldb-perf-demo-${self:provider.stage}
+
+  perfQLDBGet:
+    name: perf-qldb-get-${self:provider.stage}
+    handler: functions/perf-qldb-get.handler
     events:
       - http:
           path: /qldb/{govid}
@@ -33,14 +57,47 @@ functions:
         Action: 
           - qldb:SendCommand
         Resource: arn:aws:qldb:#{AWS::Region}:#{AWS::AccountId}:ledger/qldb-perf-demo-${self:provider.stage}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"
     environment:
-      AWS_NODEJS_CONNECTION_REUSE_ENABLED	: "1"
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED : "1"
       LEDGER_NAME : qldb-perf-demo-${self:provider.stage}
-      
+    
 
-  perfDynamoDB:
-    name: perf-dynamodb-${self:provider.stage}
-    handler: functions/perf-dynamodb.handler
+  perfDynamoDBCreate:
+    name: perf-dynamodb-create-${self:provider.stage}
+    handler: functions/perf-dynamodb-create.handler
+    events:
+      - http:
+          path: /dynamodb
+          method: post
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+          - dynamodb:Scan
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
+        Resource:
+          Fn::GetAtt: [DynamoDBTable, Arn]
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"  
+    environment:
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED : "1"
+      TABLE_NAME : Person-${self:provider.stage}
+        
+
+  perfDynamoDBGet:
+    name: perf-dynamodb-get-${self:provider.stage}
+    handler: functions/perf-dynamodb-get.handler
     events:
       - http:
           path: /dynamodb/{govid}
@@ -56,11 +113,14 @@ functions:
           - dynamodb:DeleteItem
         Resource:
           Fn::GetAtt: [DynamoDBTable, Arn]
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"  
     environment:
-      AWS_NODEJS_CONNECTION_REUSE_ENABLED	: "1"
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED : "1"
       TABLE_NAME : Person-${self:provider.stage}
-        
-
 
 resources:
   Resources:
@@ -77,7 +137,7 @@ resources:
 
     DynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain # Use 'Retain' if sls deploy should not delete the table
+      DeletionPolicy: Retain
       Properties:
         TableName: Person-${self:provider.stage}
         AttributeDefinitions:
