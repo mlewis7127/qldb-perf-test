@@ -7,6 +7,9 @@ provider:
   memorySize: 512
   stage: ${opt:stage, 'dev'}
   region: eu-west-1
+  tracing:
+    apiGateway: true
+    lambda: true 
 
 plugins:
   - serverless-pseudo-parameters
@@ -33,6 +36,11 @@ functions:
         Action: 
           - qldb:SendCommand
         Resource: arn:aws:qldb:#{AWS::Region}:#{AWS::AccountId}:ledger/qldb-perf-demo-${self:provider.stage}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"      
     environment:
       AWS_NODEJS_CONNECTION_REUSE_ENABLED : "1"
       LEDGER_NAME : qldb-perf-demo-${self:provider.stage}
@@ -49,6 +57,11 @@ functions:
         Action: 
           - qldb:SendCommand
         Resource: arn:aws:qldb:#{AWS::Region}:#{AWS::AccountId}:ledger/qldb-perf-demo-${self:provider.stage}
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"
     environment:
       AWS_NODEJS_CONNECTION_REUSE_ENABLED : "1"
       LEDGER_NAME : qldb-perf-demo-${self:provider.stage}
@@ -72,6 +85,11 @@ functions:
           - dynamodb:DeleteItem
         Resource:
           Fn::GetAtt: [DynamoDBTable, Arn]
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"  
     environment:
       AWS_NODEJS_CONNECTION_REUSE_ENABLED : "1"
       TABLE_NAME : Person-${self:provider.stage}
@@ -95,6 +113,11 @@ functions:
           - dynamodb:DeleteItem
         Resource:
           Fn::GetAtt: [DynamoDBTable, Arn]
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"  
     environment:
       AWS_NODEJS_CONNECTION_REUSE_ENABLED : "1"
       TABLE_NAME : Person-${self:provider.stage}
@@ -114,7 +137,7 @@ resources:
 
     DynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain # Use 'Retain' if sls deploy should not delete the table
+      DeletionPolicy: Retain
       Properties:
         TableName: Person-${self:provider.stage}
         AttributeDefinitions:

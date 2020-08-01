@@ -1,6 +1,9 @@
 const { QldbDriver } = require('amazon-qldb-driver-nodejs');
 const qldbDriver = new QldbDriver(process.env.LEDGER_NAME);
 
+const AWSXRay = require('aws-xray-sdk-core');
+const AWS = AWSXRay.captureAWS(require('aws-sdk'));
+
 module.exports.handler = async (event) => {
   console.log(`** PRINT MSG: ${JSON.stringify(event, null, 2)}`);
   const { GovId, FirstName, LastName, DOB, GovIdType, Address } = JSON.parse(event.body);

@@ -1,5 +1,8 @@
-const DynamoDB = require('aws-sdk/clients/dynamodb')
-const documentClient = new DynamoDB.DocumentClient()
+const DynamoDB = require('aws-sdk/clients/dynamodb');
+const documentClient = new DynamoDB.DocumentClient();
+
+const AWSXRay = require('aws-xray-sdk-core');
+const AWS = AWSXRay.captureAWS(require('aws-sdk'));
 
 
 module.exports.handler = async (event) => {
